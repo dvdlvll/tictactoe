@@ -1,0 +1,69 @@
+@import "./reset";
+@import "./variables";
+@import "./mixins";
+
+body {
+  background-color: white;
+  overflow: hidden;
+}
+
+.board-container {
+  @include dimension-properties(100vh, 100vw);
+  @include display-properties(grid, center, center, center);
+  grid-template-columns: repeat(3, auto);
+  grid-gap: 0.5vmin;
+
+  .board-cell {
+    @include dimension-properties(15vmin, 15vmin);
+    background-color: $grey;
+
+    border-radius: 15%;
+
+    cursor: pointer;
+
+    &.orange {
+      background-color: $orange;
+    }
+
+    &.blue {
+      background-color: $blue;
+    }
+
+    &.blue,
+    &.orange {
+      cursor: not-allowed;
+    }
+  }
+
+  &.orange .board-cell:not(.orange):not(.blue):hover {
+    background-color: $light-orange;
+  }
+
+  &.blue .board-cell:not(.orange):not(.blue):hover {
+    background-color: $light-blue;
+  }
+}
+
+.win-container {
+  display: none;
+
+  @include font-properties(white, $khula, 5vmin, 700, center);
+  background-color: rgba(0, 0, 0, 0.9);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  button {
+    @include font-properties(white, $khula, 3vmin, 400, center);
+    background-color: $grey;
+    padding: 0.25em 0.5em;
+    cursor: pointer;
+  }
+
+  &.show {
+    @include display-properties(flex, center, center, $direction: column);
+  }
+}

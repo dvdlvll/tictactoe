@@ -1,0 +1,39 @@
+@mixin display-properties(
+  $display,
+  $justify: null,
+  $align-items: null,
+  $align-content: null,
+  $direction: null
+) {
+  display: $display;
+  justify-content: $justify;
+  align-items: $align-items;
+  align-content: $align-content;
+  flex-direction: $direction;
+}
+
+@mixin dimension-properties($height, $width) {
+  height: $height;
+  width: $width;
+}
+
+@mixin position-properties($position, $top: null, $left: null, $z-index: null) {
+  position: $position;
+  top: $top;
+  left: $left;
+  z-index: $z-index;
+}
+
+@mixin font-properties(
+  $color: null,
+  $family: null,
+  $size: null,
+  $weight: null,
+  $align: null
+) {
+  color: $color;
+  font-family: $family;
+  font-size: $size;
+  font-weight: $weight;
+  text-align: $align;
+}
