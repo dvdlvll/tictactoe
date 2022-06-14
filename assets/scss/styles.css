@@ -11,11 +11,31 @@
 body {
   background-color: white;
   overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.title-container {
+  color: #858d93;
+  font-family: "Khula", sans-serif;
+  font-size: 3vmin;
+  font-weight: 700;
+  text-align: center;
+  margin: 3% auto;
 }
 
 .board-container {
-  height: 100vh;
-  width: 100vw;
   display: -ms-grid;
   display: grid;
   -webkit-box-pack: center;
@@ -29,6 +49,7 @@ body {
   -ms-grid-columns: (auto)[3];
       grid-template-columns: repeat(3, auto);
   grid-gap: 0.5vmin;
+  margin: 3% auto;
 }
 
 .board-container .board-cell {
@@ -61,28 +82,40 @@ body {
 
 .win-container {
   display: none;
-  color: white;
+  color: #858d93;
   font-family: "Khula", sans-serif;
   font-size: 5vmin;
   font-weight: 700;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.9);
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
 }
 
-.win-container button {
+.win-container .button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.win-container .button-container button {
   color: white;
   font-family: "Khula", sans-serif;
   font-size: 3vmin;
   font-weight: 400;
   text-align: center;
+  border: none;
   background-color: #858d93;
   padding: 0.25em 0.5em;
   cursor: pointer;
+  margin: auto 2%;
 }
 
 .win-container.show {

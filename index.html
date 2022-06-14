@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="./assets/scss/styles.css" />
   </head>
   <body>
+    <div class="title-container">
+      <h1>Tic Tac Toe</h1>
+    </div>
+
     <div class="board-container" id="board-container">
       <div class="board-cell" data-cell data-id="0"></div>
       <div class="board-cell" data-cell data-id="1"></div>
@@ -23,7 +27,11 @@
 
     <div class="win-container" id="win-container">
       <div class="win-text-container" data-win-text-container></div>
-      <button id="restart-button">Restart</button>
+      <div class="button-container">
+        <button id="undo-button">Undo</button>
+        <button id="restart-button">Restart</button>
+        <button id="redo-button">Redo</button>
+      </div>
     </div>
   </body>
 
