@@ -72,6 +72,10 @@ body {
   cursor: not-allowed;
 }
 
+.board-container .board-cell.end-game {
+  pointer-events: none;
+}
+
 .board-container.orange .board-cell:not(.orange):not(.blue):hover {
   background-color: rgba(246, 142, 86, 0.5);
 }

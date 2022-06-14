@@ -48,6 +48,7 @@ function startGame() {
   boardCells.forEach((cell) => {
     cell.classList.remove(orangeClass);
     cell.classList.remove(blueClass);
+    cell.classList.remove("end-game");
     cell.removeEventListener("click", clickOnce);
     // resets the board when restart button is clicked //
 
@@ -72,16 +73,23 @@ function clickOnce(e) {
     check for win 
     ===========*/
     endGame(false);
+    boardCells.forEach((cell) => {
+      cell.classList.add("end-game");
+    });
 
     /*============
     check for draw 
     ============*/
   } else if (checkDraw()) {
     endGame(true);
-  } else {
+    boardCells.forEach((cell) => {
+      cell.classList.add("end-game");
+    });
+
     /*==========
     switch turns 
     ==========*/
+  } else {
     switchTurns();
     showCurrentClassHoverStyles();
   }
