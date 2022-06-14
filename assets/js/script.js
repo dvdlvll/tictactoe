@@ -121,14 +121,6 @@ function checkWin(currentClass) {
 
 function endGame(draw) {
   if (draw) {
-  } else {
-    winTextContainer.innerText = `${orangeTurn ? "Orange" : "Blue"} wins!`;
-    winContainer.classList.add("show");
-  }
-}
-
-function endGame(draw) {
-  if (draw) {
     winTextContainer.innerText = `Draw!`;
   } else {
     winTextContainer.innerText = `${orangeTurn ? "Orange" : "Blue"} wins!`;
@@ -143,3 +135,14 @@ function checkDraw() {
     );
   });
 }
+
+/*==========================
+functions for history states 
+==========================*/
+
+const baseState = function () {
+  return [null, null, null, null, null, null, null, null, null];
+};
+const historyState = [];
+let currentState;
+let turn;
