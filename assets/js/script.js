@@ -32,14 +32,19 @@ const boardContainer = document.querySelector("#board-container");
 const winTextContainer = document.querySelector("[data-win-text-container]");
 const winContainer = document.querySelector("#win-container");
 const restartButton = document.querySelector("#restart-button");
+
+let boardState = [
+  ["", "", ""],
+  ["", "", ""],
+  ["", "", ""],
+];
+let boardHistory = [];
+let historyClone = boardHistory;
 let orangeTurn;
 
-/*========
-start game
-========*/
-
-startGame();
-
+/*========================
+function for starting game
+========================*/
 function startGame() {
   /*==============================
   event listener for clicking cell 
@@ -67,6 +72,10 @@ function clickOnce(e) {
   const currentClass = orangeTurn ? orangeClass : blueClass;
   // if orangeTurn = true, currentClass = orangeClass, else, = blueClass //
   placePlayerMove(cell, currentClass);
+  updateBoardState(cell);
+  updateHistory();
+  console.log(boardState);
+  console.log(boardHistory);
 
   if (checkWin(currentClass)) {
     /*===========
@@ -94,8 +103,6 @@ function clickOnce(e) {
     showCurrentClassHoverStyles();
   }
 }
-
-restartButton.addEventListener("click", startGame);
 
 /*======================
 functions for game logic 
@@ -147,10 +154,21 @@ function checkDraw() {
 /*==========================
 functions for history states 
 ==========================*/
+function updateBoardState(a) {
+  let index = [...boardCells].indexOf(a);
+  let y = Math.floor(index / 3);
+  let x = index % 3;
+  if (orangeTurn) {
+    boardState[y][x] = orangeClass;
+  } else {
+    boardState[y][x] = blueClass;
+  }
+  return boardState;
+}
 
-const baseState = function () {
-  return [null, null, null, null, null, null, null, null, null];
-};
-const historyState = [];
-let currentState;
-let turn;
+function updateHistory() {
+  boardHistory.push(JSON.parse(JSON.stringify(boardState)));
+}
+
+startGame();
+restartButton.addEventListener("click", startGame);

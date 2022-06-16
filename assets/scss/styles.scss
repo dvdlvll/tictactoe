@@ -19,7 +19,7 @@ body {
   grid-template-columns: repeat(3, auto);
   grid-gap: 0.5vmin;
 
-  margin: 3% auto;
+  margin: 2% auto;
 
   .board-cell {
     @include dimension-properties(15vmin, 15vmin);
@@ -65,7 +65,7 @@ body {
     @include display-properties(flex, center, center, $direction: row);
 
     button {
-      @include font-properties(white, $khula, 3vmin, 400, center);
+      @include font-properties(white, $khula, 3vmin, 700, center);
 
       border: none;
       background-color: $grey;
