@@ -170,5 +170,18 @@ function updateHistory() {
   boardHistory.push(JSON.parse(JSON.stringify(boardState)));
 }
 
+// tentative
+function changeState() {
+  [...boardCells].forEach((cell) => {
+    cell.classList.remove(orangeClass);
+    cell.classList.remove(blueClass);
+
+    let index = [...boardCells].indexOf(cell);
+    let y = Math.floor(index / 3);
+    let x = index % 3;
+    cell.classList.add(boardState[y][x]);
+  });
+}
+
 startGame();
 restartButton.addEventListener("click", startGame);
