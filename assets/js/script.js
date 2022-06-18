@@ -32,6 +32,8 @@ const boardContainer = document.querySelector("#board-container");
 const winTextContainer = document.querySelector("[data-win-text-container]");
 const winContainer = document.querySelector("#win-container");
 const restartButton = document.querySelector("#restart-button");
+const undoButton = document.querySelector("#undo-button");
+const redoButton = document.querySelector("#redo-button");
 
 let boardState = [
   ["", "", ""],
@@ -39,7 +41,7 @@ let boardState = [
   ["", "", ""],
 ];
 let boardHistory = [];
-let historyClone = boardHistory;
+//let historyClone = boardHistory;
 let orangeTurn;
 
 /*========================
@@ -74,8 +76,6 @@ function clickOnce(e) {
   placePlayerMove(cell, currentClass);
   updateBoardState(cell);
   updateHistory();
-  console.log(boardState);
-  console.log(boardHistory);
 
   if (checkWin(currentClass)) {
     /*===========
@@ -172,16 +172,38 @@ function updateHistory() {
 
 // tentative
 function changeState() {
-  [...boardCells].forEach((cell) => {
+  boardCells.forEach((cell) => {
     cell.classList.remove(orangeClass);
     cell.classList.remove(blueClass);
 
     let index = [...boardCells].indexOf(cell);
     let y = Math.floor(index / 3);
     let x = index % 3;
-    cell.classList.add(boardState[y][x]);
+    console.log;
+
+    if (boardState[y][x] != "") {
+      cell.classList.add(boardState[y][x]);
+    }
   });
+}
+
+function reOrder(arr, from, to) {
+  arr.splice(to, 0, arr.splice(from, 1)[0]);
 }
 
 startGame();
 restartButton.addEventListener("click", startGame);
+
+undoButton.addEventListener("click", () => {
+  reOrder(boardHistory, boardHistory.length - 1, 0);
+  boardState = boardHistory[boardHistory.length - 1];
+  console.log(boardState);
+  changeState();
+});
+
+redoButton.addEventListener("click", () => {
+  reOrder(boardHistory, 0, boardHistory.length - 1);
+  boardState = boardHistory[boardHistory.length - 1];
+  console.log(boardState);
+  changeState();
+});

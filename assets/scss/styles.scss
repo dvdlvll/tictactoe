@@ -11,7 +11,7 @@ body {
 .title-container {
   @include font-properties($grey, $khula, 3vmin, 700, center);
 
-  margin: 3% auto;
+  margin: 2% auto;
 }
 
 .board-container {
@@ -19,7 +19,7 @@ body {
   grid-template-columns: repeat(3, auto);
   grid-gap: 0.5vmin;
 
-  margin: 2% auto;
+  margin: 3% auto;
 
   .board-cell {
     @include dimension-properties(15vmin, 15vmin);
@@ -60,6 +60,8 @@ body {
   display: none;
 
   @include font-properties($grey, $khula, 5vmin, 700, center);
+
+  margin: 2% auto;
 
   .button-container {
     @include display-properties(flex, center, center, $direction: row);
