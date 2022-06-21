@@ -1,14 +1,3 @@
-/*
-let container = document.querySelector("#board-container");
-let cell = document.querySelector("[data-cell]");
-
-let boardState = [
-  ["", "", ""],
-  ["", "", ""],
-  ["", "", ""],
-];
-*/
-
 /*=======
 variables 
 =======*/
@@ -27,10 +16,18 @@ const winCombinations = [
   [0, 4, 8],
   [2, 4, 6],
 ];
+
+const chooseQuestion = document.querySelector("#h2");
+const chooseContainer = document.querySelector("#choose-container");
+const chooseBlue = document.querySelector("[data-choose-blue]");
+const chooseOrange = document.querySelector("[data-choose-orange]");
+
 const boardCells = document.querySelectorAll("[data-cell]");
 const boardContainer = document.querySelector("#board-container");
+
 const winTextContainer = document.querySelector("[data-win-text-container]");
 const winContainer = document.querySelector("#win-container");
+
 const restartButton = document.querySelector("#restart-button");
 const undoButton = document.querySelector("#undo-button");
 const redoButton = document.querySelector("#redo-button");
@@ -41,8 +38,89 @@ let boardState = [
   ["", "", ""],
 ];
 let boardHistory = [];
-//let historyClone = boardHistory;
+let historyClone = boardHistory;
+
 let orangeTurn;
+
+/*=============
+event listeners 
+=============*/
+
+chooseBlue.addEventListener("click", () => {
+  orangeTurn = false;
+  showBoard();
+  startGame();
+});
+
+chooseOrange.addEventListener("click", () => {
+  orangeTurn = true;
+  showBoard();
+  startGame();
+});
+
+undoButton.addEventListener("click", () => {
+  if (boardHistory[boardHistory.length - 1] === historyClone[0]) {
+    alert("pee");
+    return;
+  }
+
+  reOrder(boardHistory, boardHistory.length - 1, 0);
+  boardState = boardHistory[boardHistory.length - 1];
+
+  changeState();
+});
+
+redoButton.addEventListener("click", () => {
+  if (
+    boardHistory[boardHistory.length - 1] ===
+    historyClone[historyClone.length - 1]
+  ) {
+    alert("pee");
+    return;
+  }
+
+  reOrder(boardHistory, 0, boardHistory.length - 1);
+  boardState = boardHistory[boardHistory.length - 1];
+  changeState();
+});
+
+restartButton.addEventListener("click", hideBoard);
+
+/*==================================
+function for choosing starting color
+==================================*/
+function showBoard() {
+  chooseContainer.classList.add("opacity-toggle");
+  chooseQuestion.classList.add("opacity-toggle");
+  chooseContainer.classList.remove("remove-opacity-toggle");
+  chooseQuestion.classList.remove("remove-opacity-toggle");
+  setTimeout(() => chooseContainer.classList.add("hide-toggle"), 500);
+  setTimeout(() => chooseQuestion.classList.add("hide-toggle"), 500);
+
+  boardContainer.classList.add("show-board");
+  boardContainer.classList.remove("remove-opacity-board");
+  setTimeout(() => boardContainer.classList.add("opacity-board"), 500);
+}
+
+/*================================================
+function for going back to choosing starting color
+================================================*/
+function hideBoard() {
+  boardContainer.classList.add("remove-opacity-board");
+  boardContainer.classList.remove("opacity-board");
+  setTimeout(() => boardContainer.classList.remove("show-board"), 500);
+
+  winContainer.classList.add("remove-opacity-win");
+  winContainer.classList.remove("opacity-win");
+  setTimeout(() => winContainer.classList.remove("show-win"), 500);
+
+  setTimeout(() => chooseContainer.classList.remove("opacity-toggle"), 600);
+  setTimeout(() => chooseQuestion.classList.remove("opacity-toggle"), 600);
+  setTimeout(() => chooseContainer.classList.add("remove-opacity-toggle"), 600);
+  setTimeout(() => chooseQuestion.classList.add("remove-opacity-toggle"), 600);
+  setTimeout(() => chooseContainer.classList.remove("hide-toggle"), 500);
+  setTimeout(() => chooseQuestion.classList.remove("hide-toggle"), 500);
+}
 
 /*========================
 function for starting game
@@ -51,8 +129,15 @@ function startGame() {
   /*==============================
   event listener for clicking cell 
   ==============================*/
-  orangeTurn = false;
   boardCells.forEach((cell) => {
+    boardState = [
+      ["", "", ""],
+      ["", "", ""],
+      ["", "", ""],
+    ];
+    boardHistory = [];
+    changeState();
+
     cell.classList.remove(orangeClass);
     cell.classList.remove(blueClass);
     cell.classList.remove("end-game");
@@ -63,7 +148,6 @@ function startGame() {
     // once : true --> cell can only be clicked once //
   });
   showCurrentClassHoverStyles();
-  winContainer.classList.remove("show");
 }
 
 function clickOnce(e) {
@@ -140,7 +224,9 @@ function endGame(draw) {
   } else {
     winTextContainer.innerText = `${orangeTurn ? "Orange" : "Blue"} wins!`;
   }
-  winContainer.classList.add("show");
+  winContainer.classList.add("show-win");
+  winContainer.classList.remove("remove-opacity-win");
+  setTimeout(() => winContainer.classList.add("opacity-win"), 1);
 }
 
 function checkDraw() {
@@ -168,9 +254,9 @@ function updateBoardState(a) {
 
 function updateHistory() {
   boardHistory.push(JSON.parse(JSON.stringify(boardState)));
+  historyClone = [...boardHistory];
 }
 
-// tentative
 function changeState() {
   boardCells.forEach((cell) => {
     cell.classList.remove(orangeClass);
@@ -179,7 +265,6 @@ function changeState() {
     let index = [...boardCells].indexOf(cell);
     let y = Math.floor(index / 3);
     let x = index % 3;
-    console.log;
 
     if (boardState[y][x] != "") {
       cell.classList.add(boardState[y][x]);
@@ -190,20 +275,3 @@ function changeState() {
 function reOrder(arr, from, to) {
   arr.splice(to, 0, arr.splice(from, 1)[0]);
 }
-
-startGame();
-restartButton.addEventListener("click", startGame);
-
-undoButton.addEventListener("click", () => {
-  reOrder(boardHistory, boardHistory.length - 1, 0);
-  boardState = boardHistory[boardHistory.length - 1];
-  console.log(boardState);
-  changeState();
-});
-
-redoButton.addEventListener("click", () => {
-  reOrder(boardHistory, 0, boardHistory.length - 1);
-  boardState = boardHistory[boardHistory.length - 1];
-  console.log(boardState);
-  changeState();
-});
