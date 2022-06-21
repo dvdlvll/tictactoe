@@ -60,8 +60,11 @@ chooseOrange.addEventListener("click", () => {
 
 undoButton.addEventListener("click", () => {
   if (boardHistory[boardHistory.length - 1] === historyClone[0]) {
-    alert("pee");
+    undoButton.classList.add("end-game");
     return;
+  } else {
+    undoButton.classList.remove("end-game");
+    redoButton.classList.remove("end-game");
   }
 
   reOrder(boardHistory, boardHistory.length - 1, 0);
@@ -75,8 +78,11 @@ redoButton.addEventListener("click", () => {
     boardHistory[boardHistory.length - 1] ===
     historyClone[historyClone.length - 1]
   ) {
-    alert("pee");
+    redoButton.classList.add("end-game");
     return;
+  } else {
+    undoButton.classList.remove("end-game");
+    redoButton.classList.remove("end-game");
   }
 
   reOrder(boardHistory, 0, boardHistory.length - 1);
@@ -110,6 +116,8 @@ function hideBoard() {
   boardContainer.classList.remove("opacity-board");
   setTimeout(() => boardContainer.classList.remove("show-board"), 500);
 
+  undoButton.classList.remove("end-game");
+  redoButton.classList.remove("end-game");
   winContainer.classList.add("remove-opacity-win");
   winContainer.classList.remove("opacity-win");
   setTimeout(() => winContainer.classList.remove("show-win"), 500);

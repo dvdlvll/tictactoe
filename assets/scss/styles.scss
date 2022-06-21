@@ -91,10 +91,6 @@ body {
     &.orange {
       cursor: not-allowed;
     }
-
-    &.end-game {
-      pointer-events: none;
-    }
   }
 
   &.orange .board-cell:not(.orange):not(.blue):hover {
@@ -156,4 +152,8 @@ body {
 
 .hide-toggle {
   display: none;
+}
+
+.end-game {
+  pointer-events: none;
 }
